@@ -4,16 +4,18 @@ from tools.transform_eva import *
 from pytransform3d.rotations import *
 
 
-class PlotSTL:
-    def __init__(self, eva_model, q):
+class PlotEva:
+    def __init__(self, eva, eva_model):
         np.set_printoptions(suppress=True)
-        self.q = q
+        self.eva = eva
         self.eva_model = eva_model
-        self.T_tcp = self._find_tcp_transform()
+        self.tran = CreateTransform(self.eva, self.eva_model)
+        self._import_stl()
 
     def _import_stl(self):
         # Read the STL using numpy-stl
         base = "STL/base_ASS.stl"
+        card = "STL/card.stl"
         link1 = "STL/link1_ASS.stl"
         link2 = "STL/link2_ASS.stl"
         link3 = "STL/link3_ASS.stl"
@@ -30,37 +32,21 @@ class PlotSTL:
         self.mesh['4'] = pv.read(link4)
         self.mesh['5'] = pv.read(link5)
         self.mesh['6'] = pv.read(link6)
+        self.mesh['card'] = pv.read(card)
+
         # Scale joints from mm to m
         for joint in range(0, 7):
             self.mesh[str(joint)].points = self.mesh[str(joint)].points/1000
 
-    def _transform_stl(self):
-        self._import_stl()
-        tran_local = CreateTransform(self.eva_model)
+    def _transform_stl(self, q):
+        self.q = q
         for joint in range(1, 7):
-            tran_matrix = tran_local.transform_single_joint(self.q, joint-1)
+            tran_matrix = self.tran.transform_single_joint(self.q, joint-1)
             self.mesh[str(joint)].transform(np.array(tran_matrix))
-        self.Tee = tran_local.transform_ee_plate(self.q)
-
-    def _find_tcp_transform(self):
-        # Find transformation matrix between end-effector and TCP end
-        self._transform_stl()
-        yaw = self.eva_model['EVA']['tcp']['angles']['y']
-        pitch = self.eva_model['EVA']['tcp']['angles']['p']
-        roll = self.eva_model['EVA']['tcp']['angles']['r']
-        ypr = [-yaw, -pitch, -roll]
-        self.tcp_offset = np.array([[self.eva_model['EVA']['tcp']['offset']['x']],
-                                    [self.eva_model['EVA']['tcp']['offset']['y']],
-                                    [self.eva_model['EVA']['tcp']['offset']['z']],
-                                    [1]])
-
-        rot_tcp = matrix_from_euler_zyx(ypr)
-        tcp_transform = np.vstack((rot_tcp, [0, 0, 0]))
-        tcp_transform = np.hstack((tcp_transform, self.tcp_offset))
-        return tcp_transform
+        self.Tee = self.tran.transform_ee_plate(self.q)
 
     @staticmethod
-    def _plot_frame(plot, frame, size=0.1):
+    def plot_frame(plot, frame, size=0.1):
         scale = 1/size
         center = [row[3] for row in frame[0:3]]
         x = [1, 0, 0]
@@ -88,52 +74,52 @@ class PlotSTL:
         return plot
 
     def _plot_tcp(self, plot):
-        plot = self._plot_frame(plot, self.Tee, 0.05)
-        T_tcp_absolute = self.Tee.dot(self.T_tcp)
-        plot = self._plot_frame(plot, T_tcp_absolute)
-        pos_tcp_absolute = [row[3] for row in T_tcp_absolute[0:3]]
+        tcp_transform = self.tran.transform_ee_plate_to_tcp()
+        plot = self.plot_frame(plot, self.Tee, 0.05)
+        tcp_transform_abs = self.Tee.dot(tcp_transform)
+        plot = self.plot_frame(plot, tcp_transform_abs)
+        pos_tcp_absolute = [row[3] for row in tcp_transform_abs[0:3]]
         sphere = pv.Sphere(radius=0.01, center=pos_tcp_absolute)
         plot.add_mesh(sphere, show_edges=False, color='black')
 
-        # Plot TCP simplified geometry
-        pointa = [row[3] for row in self.Tee]
-        pointb = (self.Tee.dot([0, 0, self.tcp_offset[2], 1]))
-        pointc = pos_tcp_absolute
+        # Plot CARD
+        self.mesh['card'].points = self.mesh['card'].points / 1000
+        self.mesh['card'].transform(np.array(tcp_transform_abs))
+        plot.add_mesh(self.mesh['card'], show_edges=False, color='yellow', opacity=1,
+                      ambient=0.3, diffuse=0.3, specular=10.0, specular_power=100.0)
 
-        line1 = pv.Line(pointa[0:3], pointb[0:3], resolution=10)
-        line2 = pv.Line(pointb[0:3], pointc[0:3], resolution=1)
+        # Plot TCP simplified geometry
+        point_a = [row[3] for row in self.Tee]
+        point_b = (self.Tee.dot([0, 0, self.eva_model['EVA']['tcp']['offset']['z'], 1]))
+        point_c = pos_tcp_absolute
+        line1 = pv.Line(point_a[0:3], point_b[0:3], resolution=1)
+        line2 = pv.Line(point_b[0:3], point_c[0:3], resolution=1)
         plot.add_mesh(line1, show_edges=False, color='black')
         plot.add_mesh(line2, show_edges=False, color='black')
         return plot
 
     def _plot_all_frames(self, plot):
-        tran_local = CreateTransform(self.eva_model)
-        T_prog = tran_local.transform_all(self.q)
+        tran_local = CreateTransform(self.eva, self.eva_model)
+        T_prog = tran_local.transform_all_joints(self.q)
         for frame in T_prog:
-            plot = self._plot_frame(plot, frame, size=0.15)
+            plot = self.plot_frame(plot, frame, size=0.15)
 
     @staticmethod
-    def plot_sphere(plot, pos, color_user='blue'):
+    def plot_sphere(plot, pos, color_user='black'):
         sphere = pv.Sphere(radius=0.01, center=pos)
         plot.add_mesh(sphere, show_edges=False, color=color_user)
         return plot
 
-    def plot_pose(self, plot, tcp=True, frames=False):
-        # Plot robot
-        for joint in range(0, 7):
-            plot.add_mesh(self.mesh[str(joint)], show_edges=False, color='gray')
-        # Plot TCP
-        if tcp:
+    def plot_pose(self, plot, q, tcp=True, frames=False):
+        self.eva.calc_pose_valid(q)  # Verify pose validity
+        self._transform_stl(q)  # Obtain all STL positions
+
+        for joint in range(0, 7):  # Plot robot
+            plot.add_mesh(self.mesh[str(joint)], show_edges=False, color='white', opacity=1,
+                          ambient=0.4, diffuse=0.3, specular=10.0, specular_power=100.0)
+        if tcp:  # Plot TCP
             plot = self._plot_tcp(plot)
-        if frames:
+        if frames:  # Plot frames
             self._plot_all_frames(plot)
         plot.add_floor()
         return plot
-
-
-
-
-
-
-
-
