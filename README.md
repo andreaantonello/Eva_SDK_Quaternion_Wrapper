@@ -54,7 +54,7 @@ question:
 * At this point, you have successfully set-up the use case, and the transformation matrix between your TCP
 and the end-effector plate (`tcp_transform` in the script) will be stored internally for all the subsequent
 manipulation, along with the **corrected zeroed TCP position** (`q_corrected` in the script). Specifically, this is the function
-that will return the above-mentioned outputs
+that will return the above-mentioned outputs:
 
 ```
     q_corrected, tcp_transform = setup.run()

@@ -1,4 +1,2 @@
-**/.idea/workspace.xml **/.idea/tasks.xml
-# ignore all logs
-*.logdebug.log
+.idea/
 __pycache__
