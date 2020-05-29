@@ -19,9 +19,11 @@ obtained (in the form of a 1x6 joint vector), the values in radians must be inse
 * At this point, you can run the main file `run_this.py`. You will be asked to verify the 
 **zeroed TCP position** you've previously entered. Input `yes`:
 
+
  
     Have you already verified the TCP position? [yes/no]
     $ yes
+
 
 * You will be then shown with a 3D model of Eva, in the **zeroed TCP position**. The TCP will be
 pictured as a simplified set of lines, with a dummy payload at the end (credit card sized). A frame
@@ -33,6 +35,7 @@ automatically set this to 90 deg. Make sure this corrected position is as expect
 this will modify the **zeroed TCP position** into the **corrected zeroed TCP position**
 
 
+
     WARNING: Orientation has been straighted to the closest, adjacent axis!
         -> Original quaternion was: [-0.0042036995, -3.885815e-16, 0.9999912, 4.3711e-08] 
         -> Straightened quaternion is now: [-0.0, -0.0, 1.0, 0.0] 
@@ -42,8 +45,11 @@ this will modify the **zeroed TCP position** into the **corrected zeroed TCP pos
 question:
 
 
+
     Is the initial pose and TCP configuration correct?
     $ yes
+    
+    
     
 * At this point, you have successfully set-up the use case, and the transformation matrix between your TCP
 and the end-effector plate (`tcp_transform` in the script) will be stored internally for all the subsequent
@@ -51,12 +57,18 @@ manipulation, along with the **corrected zeroed TCP position** (`q_corrected` in
 that will return the above-mentioned outputs
 
 
+
     q_corrected, tcp_transform = setup.run()
+
+
     
 * Finally, the transformation tool around the TCP can be used. The function to obtain this is the following:
 
 
+
     q_rotated = transform_tcp_to_joint_angles(q_corrected, tcp_transform, yaw=0, pitch=0, roll=0)
+
+
 
 * The inputs are the setup values `q_corrected`, `tcp_transform` and the Euler angles `yaw`,
 `pitch`, `roll`. The code uses the ZYX Euler angles order (known also as the aeronautical yaw, pitch and roll).
@@ -68,6 +80,7 @@ joints angle 1x6 vector.
 
 It is possible to use the visualizer anywhere in the code. It is important to set up the figure environment 
 as follows:
+
 
 
     # Instantiate plotting class
@@ -84,6 +97,9 @@ as follows:
     
     # Show plot window
     plot.show()
+
+
+
 
 That is, the plotting class `PlotEva(eva, eva_model)` will have to be instantiated, and the plotter environment 
 set up through `plot = pv.Plotter()`. The plotting functions are:
