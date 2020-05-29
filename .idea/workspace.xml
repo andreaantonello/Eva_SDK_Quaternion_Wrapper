@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87dabd00-8453-4003-bda2-a2d14bbface8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/STL/card.stl" beforeDir="false" afterPath="$PROJECT_DIR$/STL/card.stl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/use_case_config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/use_case_config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_quaternion.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/plot_eva.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/plot_eva.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/transform_eva.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/transform_eva.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/verify_tcp_eva.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/verify_tcp_eva.py" afterDir="false" />
-    </list>
+    <list default="true" id="87dabd00-8453-4003-bda2-a2d14bbface8" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +44,7 @@
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
-              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+              <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -111,8 +101,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="1666">
-                <caret line="98" column="29" selection-start-line="98" selection-start-column="29" selection-end-line="98" selection-end-column="29" />
+              <first_editor relative-caret-position="1156">
+                <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
               </first_editor>
               <second_editor />
             </state>
@@ -150,8 +140,8 @@
         <option value="$PROJECT_DIR$/tools/verify_tcp_eva.py" />
         <option value="$PROJECT_DIR$/run_this.py" />
         <option value="$PROJECT_DIR$/tools/plot_eva.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -435,6 +425,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/run_this.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -445,18 +442,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="1666">
-            <caret line="98" column="29" selection-start-line="98" selection-start-column="29" selection-end-line="98" selection-end-column="29" />
+          <first_editor relative-caret-position="1156">
+            <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
           </first_editor>
           <second_editor />
         </state>
