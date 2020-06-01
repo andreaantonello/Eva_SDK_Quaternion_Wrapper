@@ -14,14 +14,14 @@ class PlotEva:
 
     def _import_stl(self):
         # Read the STL using numpy-stl
-        base = "STL/base_ASS.stl"
+        base = "STL/base.stl"
         card = "STL/card.stl"
-        link1 = "STL/link1_ASS.stl"
-        link2 = "STL/link2_ASS.stl"
-        link3 = "STL/link3_ASS.stl"
-        link4 = "STL/link4_ASS.stl"
-        link5 = "STL/link5_ASS.stl"
-        link6 = "STL/link6_ASS.stl"
+        link1 = "STL/link1.stl"
+        link2 = "STL/link2.stl"
+        link3 = "STL/link3.stl"
+        link4 = "STL/link4.stl"
+        link5 = "STL/link5.stl"
+        link6 = "STL/link6.stl"
 
         # Create the meshes
         self.mesh = {}

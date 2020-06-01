@@ -3,7 +3,15 @@ This tool allows to rotate the robot around the tool center point (TCP). The tra
 defined as successive yaw, pitch, roll rotations around the Z, Y and X axes, respectively.
 This tool will return the joint angles corresponding to the desired TCP transform.
 
-# Setup
+
+# Required packages
+
+
+
+# Pipenv setup
+
+
+# Usecase setup
 First of all, the TCP configuration must be set up. 
 The parameters can be found in the file `config/use_case_config.yaml`.
 In this file, the connection params to the robot will have to be inserted (IP and token).
