@@ -1,0 +1,57 @@
+# SETUP YAML file for Grid-to-grid demo
+
+EVA:
+  comm:
+    host: 'http://office.automata.tech:4242' # USER DEFINED
+    token: '3becdcbe6622bc87e31556bcf2cbcc0fe08a739b' # USER DEFINED
+  dh:
+    alpha:
+      - 0
+      - 1.57079632679
+      - 0
+      - -1.57079632679
+      - 1.57079632679
+      - -1.57079632679
+    a:
+      - 0
+      - 0.056
+      - 0.205
+      - -0.056
+      - 0
+      - -0.065
+    d:
+      - 0
+      - 0.2784
+      - 0
+      - 0
+      - 0.2906
+      - 0
+    offset:
+      - 0
+      - 0
+      - 1.57079632679
+      - -1.57079632679
+      - 0
+      - 0
+    ee_plate:
+      - 0
+      - 0
+      - 0.1044
+  tcp:
+    offset:
+      x: 0
+      y: 0.05
+      z: 0.1
+    angles:
+      r: 0
+      p: 0
+      y: 0
+    radius:
+      0
+    initial_pos: # Position with yaw, pitch and roll set to zero.
+      - 0
+      - 0.6
+      - -2.25
+      - 0
+      - -1.5
+      - 0
