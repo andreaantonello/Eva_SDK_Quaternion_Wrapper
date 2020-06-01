@@ -103,6 +103,6 @@ class CreateTransform:
 
         ik_result = self.eva.calc_inverse_kinematics(q_init, pos_ee, quat_ee)
         if 'success' not in ik_result['ik']['result']:
-            raise Exception('Inverse kinematics failed')
+            raise Exception('Inverse kinematics failed, guess is too far.')
         q = ik_result['ik']['joints']
         return q
