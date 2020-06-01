@@ -5,10 +5,11 @@ This tool will return the joint angles corresponding to the desired TCP transfor
 
 
 # Required packages
-
-
-
-# Pipenv setup
+* `evasdk` 
+* `stl`
+* `vtkplotlib`
+* `pytransform3d`
+* `pyvista`
 
 
 # Usecase setup
