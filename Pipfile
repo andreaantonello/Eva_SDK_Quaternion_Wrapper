@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+evasdk = "~=3.0.0"
+numpy = "*"
+numpy-stl = "*"
+pytransform3d = "*"
+vtkplotlib = "*"
+pyvista = "*"
+
+[requires]
+python_version = "3.7"

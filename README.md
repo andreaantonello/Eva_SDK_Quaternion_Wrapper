@@ -5,11 +5,30 @@ This tool will return the joint angles corresponding to the desired TCP transfor
 
 
 # Required packages
-* `evasdk` 
-* `stl`
-* `vtkplotlib`
+* `evasdk = "~=3.0.0"`
+* `numpy`
+* `numpy-stl`
 * `pytransform3d`
+* `vtkplotlib`
 * `pyvista`
+
+
+# Environment setup
+In order to install all the dependencies, please run the following (i.e. using PyCharm):
+
+
+```
+    pipenv install
+    pipenv shell
+```
+
+
+The code itself can be run from Pipenv environment just created, using:
+ 
+
+```
+    python run_this.py
+```
 
 
 # Usecase setup
