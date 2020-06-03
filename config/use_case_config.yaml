@@ -2,8 +2,8 @@
 
 EVA:
   comm:
-    host: 'http://office.automata.tech:4242' # USER DEFINED
-    token: '3becdcbe6622bc87e31556bcf2cbcc0fe08a739b' # USER DEFINED
+    host: '' # USER DEFINED
+    token: '' # USER DEFINED
   dh:
     alpha:
       - 0
