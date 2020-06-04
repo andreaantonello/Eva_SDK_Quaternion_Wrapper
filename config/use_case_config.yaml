@@ -2,53 +2,53 @@
 
 EVA:
   comm:
-    host: '' # USER DEFINED
-    token: '' # USER DEFINED
+    host: '192.168.1.X' # USER DEFINED (can be modified)
+    token: 'abcd1234' # USER DEFINED (can be modified)
   dh:
-    alpha:
+    alpha: # DO NOT MODIFY
       - 0
       - 1.57079632679
       - 0
       - -1.57079632679
       - 1.57079632679
       - -1.57079632679
-    a:
+    a: # DO NOT MODIFY
       - 0
       - 0.056
       - 0.205
       - -0.056
       - 0
       - -0.065
-    d:
+    d: # DO NOT MODIFY
       - 0
       - 0.2784
       - 0
       - 0
       - 0.2906
       - 0
-    offset:
+    offset: # DO NOT MODIFY
       - 0
       - 0
       - 1.57079632679
       - -1.57079632679
       - 0
       - 0
-    ee_plate:
+    ee_plate: # DO NOT MODIFY
       - 0
       - 0
       - 0.1044
   tcp:
-    offset:
+    offset: # USER DEFINED (can be modified)
       x: 0
       y: 0.05
       z: 0.1
-    angles:
+    angles: # USER DEFINED (can be modified)
       r: 0
       p: 0
       y: 0
-    radius:
+    radius: # USER DEFINED (can be modified)
       0
-    initial_pos: # Position with yaw, pitch and roll set to zero.
+    initial_pos: # USER DEFINED (can be modified). Position with yaw, pitch and roll set to zero.
       - 0
       - 0.6
       - -2.25
