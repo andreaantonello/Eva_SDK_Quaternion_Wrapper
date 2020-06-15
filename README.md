@@ -57,8 +57,9 @@ obtained (in the form of a 1x6 joint vector), the values in radians must be inse
 pictured as a simplified set of lines, with a dummy payload at the end (credit card sized). A frame
 of reference will shown as well:
 
+<p align="center">
 <img width="626" alt="original" src="https://user-images.githubusercontent.com/31882557/84640704-f6409380-aef1-11ea-8db8-953139d6250d.png">
-
+</p>
 
 
 NOTE: an internal tool takes care of straightening the head to 
@@ -103,7 +104,9 @@ that will return the above-mentioned outputs:
 Be aware that gimbal lock will around if the `pitch` is set to pi/2. The function returns the corresponding
 joints angle 1x6 vector. For example, a configuration with yaw=0.2, pitch=-0.3, roll=0.5 is pictured below:
 
+<p align="center">
 <img width="644" alt="transform" src="https://user-images.githubusercontent.com/31882557/84640519-b5487f00-aef1-11ea-8622-1002538013df.png">
+</p>
 
 
 # Visual tool
