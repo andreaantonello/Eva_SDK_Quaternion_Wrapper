@@ -111,7 +111,7 @@ joints angle 1x6 vector. For example, a configuration with yaw=0.2, pitch=-0.3, 
 The inverse function is the following:
 
 ```
-    ypr, pos_tcp, pos_ee = tran.transform_joint_angles_to_tcp(q_corrected, q_rotated, tcp_transform)
+    ypr, pos_tcp, pos_ee = transform_joint_angles_to_tcp(q_corrected, q_rotated, tcp_transform)
 ```
 
 and will allow, given the initial and final positions (`q_corrected`, `q_rotated`), to find the yaw, pitch and roll 
