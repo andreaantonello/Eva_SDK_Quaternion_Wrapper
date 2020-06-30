@@ -1,9 +1,12 @@
-# SETUP YAML file for Grid-to-grid demo
+# SETUP YAML file for TCP rotation demo (Aeronautical convention)
 
 EVA:
   comm:
-    host: '192.168.1.X' # USER DEFINED (can be modified)
-    token: 'abcd1234' # USER DEFINED (can be modified)
+#    host: '192.168.1.X' # USER DEFINED (can be modified)
+#    token: 'abcd1234' # USER DEFINED (can be modified)
+
+    host: 'http://office.automata.tech:4242'
+    token: '3becdcbe6622bc87e31556bcf2cbcc0fe08a739b'
   dh:
     alpha: # DO NOT MODIFY
       - 0

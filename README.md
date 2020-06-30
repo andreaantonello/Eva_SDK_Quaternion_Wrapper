@@ -108,6 +108,14 @@ joints angle 1x6 vector. For example, a configuration with yaw=0.2, pitch=-0.3, 
 <img width="644" alt="transform" src="https://user-images.githubusercontent.com/31882557/84640519-b5487f00-aef1-11ea-8622-1002538013df.png">
 </p>
 
+The inverse function is the following:
+
+```
+    ypr, pos_tcp, pos_ee = tran.transform_joint_angles_to_tcp(q_corrected, q_rotated, tcp_transform)
+```
+
+and will allow, given the initial and final positions (`q_corrected`, `q_rotated`), to find the yaw, pitch and roll 
+angles around the TCP tip (`ypr`), along with the XYZ location of the TCP and of the robot (`pos_tcp`, `pos_ee`).
 
 # Visual tool
 
