@@ -2,8 +2,8 @@
 
 EVA:
   comm:
-    host: '192.168.1.X' # USER DEFINED (can be modified)
-    token: 'abcd1234' # USER DEFINED (can be modified)
+    host: '192.168.1.100' # USER DEFINED (can be modified)
+    token: 'c096ccb9ba429387a6005d9ae9c69d52f0c4d16d' # USER DEFINED (can be modified)
   dh:
     alpha: # DO NOT MODIFY
       - 0
@@ -49,9 +49,9 @@ EVA:
     radius: # USER DEFINED (can be modified)
       0
     initial_pos: # USER DEFINED (can be modified). Position with yaw, pitch and roll set to zero.
-      - 0
-      - 0.6
-      - -2.25
-      - 0
+      - 0.1
+      - 0.3
+      - -1.8
+      - 0.3
       - -1.5
-      - 0
+      - 1.2 # check why this fails for values greater than 1.1

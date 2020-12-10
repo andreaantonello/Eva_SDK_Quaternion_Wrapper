@@ -1,6 +1,5 @@
 import os
 import yaml
-from pathlib import Path
 
 
 def load_use_case_config():

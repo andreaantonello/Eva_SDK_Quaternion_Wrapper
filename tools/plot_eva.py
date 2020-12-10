@@ -1,16 +1,19 @@
 # Visualization class
 import pyvista as pv
-from tools.transform_eva import *
 from pytransform3d.rotations import *
+np.set_printoptions(suppress=True)
+
+X = [1, 0, 0]
+Y = [0, 1, 0]
+Z = [0, 0, 1]
 
 
-class PlotEva:
-    def __init__(self, eva, eva_model):
-        np.set_printoptions(suppress=True)
+class PlotterEva:
+    def __init__(self, eva, eva_model, transform):
         self.eva = eva
         self.eva_model = eva_model
-        self.tran = CreateTransform(self.eva, self.eva_model)
-        self._import_stl()
+        self.transform = transform
+        self.mesh = {}
 
     def _import_stl(self):
         # Read the STL using numpy-stl
@@ -24,7 +27,6 @@ class PlotEva:
         link6 = "STL/link6.stl"
 
         # Create the meshes
-        self.mesh = {}
         self.mesh['0'] = pv.read(base)
         self.mesh['1'] = pv.read(link1)
         self.mesh['2'] = pv.read(link2)
@@ -34,27 +36,25 @@ class PlotEva:
         self.mesh['6'] = pv.read(link6)
         self.mesh['card'] = pv.read(card)
 
-        # Scale joints from mm to m
+        # Scale STL from mm to m
         for joint in range(0, 7):
             self.mesh[str(joint)].points = self.mesh[str(joint)].points/1000
 
     def _transform_stl(self, q):
+        self._import_stl()
         self.q = q
         for joint in range(1, 7):
-            tran_matrix = self.tran.transform_single_joint(self.q, joint-1)
+            tran_matrix = self.transform.transform_single_joint(self.q, joint-1)
             self.mesh[str(joint)].transform(np.array(tran_matrix))
-        self.Tee = self.tran.transform_ee_plate(self.q)
+        self.Tee = self.transform.transform_base_to_ee_plate(self.q)
 
     @staticmethod
     def plot_frame(plot, frame, size=0.1):
         scale = 1/size
         center = [row[3] for row in frame[0:3]]
-        x = [1, 0, 0]
-        y = [0, 1, 0]
-        z = [0, 0, 1]
-        x_abs = frame[0:3, 0:3].dot(np.transpose(x))
-        y_abs = frame[0:3, 0:3].dot(np.transpose(y))
-        z_abs = frame[0:3, 0:3].dot(np.transpose(z))
+        x_abs = frame[0:3, 0:3].dot(np.transpose(X))
+        y_abs = frame[0:3, 0:3].dot(np.transpose(Y))
+        z_abs = frame[0:3, 0:3].dot(np.transpose(Z))
 
         x_axis = pv.Arrow(np.zeros(3), x_abs[0:3], shaft_radius=0.02, tip_radius=0.05)
         y_axis = pv.Arrow(np.zeros(3), y_abs[0:3], shaft_radius=0.02, tip_radius=0.05)
@@ -64,9 +64,9 @@ class PlotEva:
         y_axis.points /= scale
         z_axis.points /= scale
 
-        x_axis.points = x_axis.points + center
-        y_axis.points = y_axis.points + center
-        z_axis.points = z_axis.points + center
+        x_axis.points += center
+        y_axis.points += center
+        z_axis.points += center
 
         plot.add_mesh(x_axis, show_edges=False, color='red')
         plot.add_mesh(y_axis, show_edges=False, color='green')
@@ -74,7 +74,7 @@ class PlotEva:
         return plot
 
     def _plot_tcp(self, plot):
-        tcp_transform = self.tran.transform_ee_plate_to_tcp()
+        tcp_transform = self.transform.transform_ee_plate_to_tcp(self.transform.tcp)
         plot = self.plot_frame(plot, self.Tee, 0.05)
         tcp_transform_abs = self.Tee.dot(tcp_transform)
         plot = self.plot_frame(plot, tcp_transform_abs)
@@ -99,8 +99,7 @@ class PlotEva:
         return plot
 
     def _plot_all_frames(self, plot):
-        tran_local = CreateTransform(self.eva, self.eva_model)
-        T_prog = tran_local.transform_all_joints(self.q)
+        T_prog = self.transform.transform_all_joints(self.q)
         for frame in T_prog:
             plot = self.plot_frame(plot, frame, size=0.15)
 
@@ -110,10 +109,12 @@ class PlotEva:
         plot.add_mesh(sphere, show_edges=False, color=color_user)
         return plot
 
-    def plot_pose(self, plot, q, tcp=True, frames=False):
+    def plot_pose(self, plot, q, tcp=True, frames=False, subplot=None, title=None):
+        self.mesh = {}
         self.eva.calc_pose_valid(q)  # Verify pose validity
         self._transform_stl(q)  # Obtain all STL positions
-
+        if subplot is not None:
+            plot.subplot(subplot[0], subplot[1])
         for joint in range(0, 7):  # Plot robot
             plot.add_mesh(self.mesh[str(joint)], show_edges=False, color='white', opacity=1,
                           ambient=0.4, diffuse=0.3, specular=10.0, specular_power=100.0)
@@ -122,4 +123,5 @@ class PlotEva:
         if frames:  # Plot frames
             self._plot_all_frames(plot)
         plot.add_floor()
+        plot.add_text(title)
         return plot

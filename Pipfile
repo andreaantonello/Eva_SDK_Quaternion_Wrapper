@@ -10,7 +10,6 @@ evasdk = "~=3.0.0"
 numpy = "*"
 numpy-stl = "*"
 pytransform3d = "*"
-vtkplotlib = "*"
 pyvista = "*"
 
 [requires]

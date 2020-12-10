@@ -44,7 +44,7 @@ condition over which all the rotations will be applied. Once the configuration h
 obtained (in the form of a 1x6 joint vector), the values in radians must be inserted in the
 `config/use_case_config.yaml` file, under the YAML entry `['EVA']['tcp']['initial_pos']`.
 
-* At this point, you can run the main file `run_this.py`. You will be asked to verify the 
+* At this point, you can run the main file `main.py` (`python3 main.py`). You will be asked to verify the 
 **zeroed TCP position** you've previously entered. Input `yes`:
 
 
