@@ -44,18 +44,23 @@ condition over which all the rotations will be applied. Once the configuration h
 obtained (in the form of a 1x6 joint vector), the values in radians must be inserted in the
 `config/use_case_config.yaml` file, under the YAML entry `['EVA']['tcp']['initial_pos']`.
 
-* At this point, you can run the main file `main.py` (`python3 main.py`). You will be asked to verify the 
-**zeroed TCP position** you've previously entered. Input `yes`:
+* At this point, you can run the main file `run_this.py`. You will be asked to verify the 
+**zeroed TCP position** you've previously entered. Input `no` to have a look at how the **zeroed TCP position** looks like in 3D space:
 
 
 ```
     Have you already verified the TCP position? [yes/no]
-    $ yes
+    $ no
 ```
 
 * You will be then shown with a 3D model of Eva, in the **zeroed TCP position**. The TCP will be
 pictured as a simplified set of lines, with a dummy payload at the end (credit card sized). A frame
-of reference will shown as well. 
+of reference will shown as well:
+
+<p align="center">
+<img width="626" alt="original" src="https://user-images.githubusercontent.com/31882557/84640704-f6409380-aef1-11ea-8db8-953139d6250d.png">
+</p>
+
 
 NOTE: an internal tool takes care of straightening the head to 
 the closest axis (i.e. if the orientation is slightly off axis, for example 85 deg, the code will
@@ -97,8 +102,20 @@ that will return the above-mentioned outputs:
 * The inputs are the setup values `q_corrected`, `tcp_transform` and the Euler angles `yaw`,
 `pitch`, `roll`. The code uses the ZYX Euler angles order (known also as the aeronautical yaw, pitch and roll).
 Be aware that gimbal lock will around if the `pitch` is set to pi/2. The function returns the corresponding
-joints angle 1x6 vector.  
+joints angle 1x6 vector. For example, a configuration with yaw=0.2, pitch=-0.3, roll=0.5 is pictured below:
 
+<p align="center">
+<img width="644" alt="transform" src="https://user-images.githubusercontent.com/31882557/84640519-b5487f00-aef1-11ea-8622-1002538013df.png">
+</p>
+
+The inverse function is the following:
+
+```
+    ypr, pos_tcp, pos_ee = transform_joint_angles_to_tcp(q_corrected, q_rotated, tcp_transform)
+```
+
+and will allow, given the initial and final positions (`q_corrected`, `q_rotated`), to find the yaw, pitch and roll 
+angles around the TCP tip (`ypr`), along with the XYZ location of the TCP and of the robot (`pos_tcp`, `pos_ee`).
 
 # Visual tool
 
