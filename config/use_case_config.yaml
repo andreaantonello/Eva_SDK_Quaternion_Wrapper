@@ -1,4 +1,4 @@
-# SETUP YAML file for Grid-to-grid demo
+# SETUP YAML file for TCP rotation demo (Aeronautical convention)
 
 EVA:
   comm:

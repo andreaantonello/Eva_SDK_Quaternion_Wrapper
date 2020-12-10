@@ -43,7 +43,7 @@ class PlotEva:
         for joint in range(1, 7):
             tran_matrix = self.tran.transform_single_joint(self.q, joint-1)
             self.mesh[str(joint)].transform(np.array(tran_matrix))
-        self.Tee = self.tran.transform_ee_plate(self.q)
+        self.Tee = self.tran.transform_base_to_ee_plate(self.q)
 
     @staticmethod
     def plot_frame(plot, frame, size=0.1):
