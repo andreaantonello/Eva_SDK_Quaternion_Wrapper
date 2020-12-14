@@ -205,7 +205,12 @@ class Transformer:
                   float(fk['orientation']['y']),
                   float(fk['orientation']['z'])]
         # ALERT!! Need to verify the code below - this is still IDEX legacy
+
         orient_straight = [0, 0, 1, 0]
+        if axis6_constant is True:
+            orient_axis6 = [np.cos(q_initial[5]/2), 0, 0, np.sin(q_initial[5]/2)]
+            orient_straight = quaternion_multiply(orient_straight, orient_axis6)
+
         print(f'WARNING: Orientation has been straighted with head pointing down!\n'
               f' -> Original quaternion was: {orient} \n',
               f'-> Straightened quaternion is now: {orient_straight} \n')
@@ -219,15 +224,13 @@ class Transformer:
         if 'success' not in ik_result['ik']['result']:
             raise Exception('Inverse kinematics failed')
         q_straightened = ik_result['ik']['joints']
-        if axis6_constant is True:
-            q_straightened_axis6_constant = copy.copy(q_straightened)
-            q_straightened_axis6_constant[5] = copy.copy(q_initial[5])
-            fk_straightened_axis6_constant = self.eva.calc_forward_kinematics(q_straightened_axis6_constant)
-            ik_result_straightened = self.eva.calc_inverse_kinematics(q_straightened_axis6_constant,
-                                                                      fk_straightened_axis6_constant['position'],
-                                                                      fk_straightened_axis6_constant['orientation'])
-            if 'success' not in ik_result['ik']['result']:
-                raise Exception('Inverse kinematics failed')
-            q_straightened_axis6_constant = ik_result_straightened['ik']['joints']
-            return q_straightened_axis6_constant
         return q_straightened
+
+
+def quaternion_multiply(quaternion1, quaternion0):
+    w0, x0, y0, z0 = quaternion0
+    w1, x1, y1, z1 = quaternion1
+    return np.array([-x1 * x0 - y1 * y0 - z1 * z0 + w1 * w0,
+                     x1 * w0 + y1 * z0 - z1 * y0 + w1 * x0,
+                     -x1 * z0 + y1 * w0 + z1 * x0 + w1 * y0,
+                     x1 * y0 - y1 * x0 + z1 * w0 + w1 * z0], dtype=np.float64)
