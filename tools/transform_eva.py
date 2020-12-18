@@ -1,7 +1,6 @@
 # Transformation class
 import pytransform3d.rotations as pyrot  # type: ignore
 import numpy as np
-import copy
 np.set_printoptions(suppress=True)
 
 
@@ -196,7 +195,7 @@ class Transformer:
         ypr_dict = {'yaw': ypr[0], 'pitch': ypr[1], 'roll': ypr[2]}
         return ypr_dict, pos_tcp, pos_ee
 
-    def straighten_head(self, q_initial=None, axis6_constant=False):
+    def straighten_head(self, q_initial=None, axis6_constant=False, compact=True):
         if q_initial is None:
             q_initial = self.eva_model['EVA']['tcp']['initial_pos']
         fk = self.eva.calc_forward_kinematics(q_initial)
@@ -207,9 +206,12 @@ class Transformer:
         # ALERT!! Need to verify the code below - this is still IDEX legacy
 
         orient_straight = [0, 0, 1, 0]
-        if axis6_constant is True:
-            orient_axis6 = [np.cos(q_initial[5]/2), 0, 0, np.sin(q_initial[5]/2)]
-            orient_straight = quaternion_multiply(orient_straight, orient_axis6)
+        if axis6_constant:
+                if compact:
+                    orient_straight = [0, np.sin(q_initial[5] / 2), np.cos(q_initial[5] / 2), 0]
+                else:
+                    orient_straight = quaternion_multiply(orient_straight,
+                                                          [np.cos(q_initial[5]/2), 0, 0, np.sin(q_initial[5]/2)])
 
         print(f'WARNING: Orientation has been straighted with head pointing down!\n'
               f' -> Original quaternion was: {orient} \n',

@@ -16,7 +16,7 @@ if __name__ == "__main__":
     plotter = PlotterEva(eva, eva_model, transform)
 
     # Straighten head
-    q_straightened = transform.straighten_head(q_initial, axis6_constant=True)
+    q_straightened = transform.straighten_head(q_initial, axis6_constant=True, compact=True)
 
     # Plot original TCP frame
     plot = pv.Plotter(shape=(1, 2))
